@@ -7,7 +7,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import io.flutter.plugin.common.PluginRegistry.RequestPermissionsResultListener
-import kotlin.reflect.KFunction1
 
 class CameraPermissions {
 
@@ -17,27 +16,37 @@ class CameraPermissions {
 
     private var ongoing = false
     fun requestPermissions(
-            activity: Activity,
-            permissionsRegistry: PermissionStuff,
-            enableAudio: Boolean,
-            callback: ResultCallback) {
+        activity: Activity,
+        permissionsRegistry: PermissionStuff,
+        enableAudio: Boolean,
+        callback: ResultCallback
+    ) {
         if (ongoing) {
             callback.onResult("cameraPermission", "Camera permission request ongoing")
         }
-        if (!hasCameraPermission(activity) || enableAudio && !hasAudioPermission(activity) || !hasWriteExternalStoragePermission(activity) || !hasWakeLockPermission(activity)) {
+        if (!hasCameraPermission(activity) || enableAudio && !hasAudioPermission(activity) || !hasWriteExternalStoragePermission(activity) || !hasWakeLockPermission(
+                activity
+            )
+        ) {
             permissionsRegistry.adddListener(
-                    CameraRequestPermissionsListener(
-                            object : ResultCallback {
-                                override fun onResult(errorCode: String?, errorDescription: String?) {
-                                    ongoing = false
-                                    callback.onResult(errorCode, errorDescription)
-                                }
-                            }))
+                CameraRequestPermissionsListener(
+                    object : ResultCallback {
+                        override fun onResult(errorCode: String?, errorDescription: String?) {
+                            ongoing = false
+                            callback.onResult(errorCode, errorDescription)
+                        }
+                    })
+            )
             ongoing = true
             ActivityCompat.requestPermissions(
-                    activity,
-                    if (enableAudio) arrayOf(permission.CAMERA, permission.RECORD_AUDIO, permission.WRITE_EXTERNAL_STORAGE, permission.WAKE_LOCK) else arrayOf(permission.CAMERA, permission.WRITE_EXTERNAL_STORAGE, permission.WAKE_LOCK),
-                    CAMERA_REQUEST_ID)
+                activity,
+                if (enableAudio) arrayOf(permission.CAMERA, permission.RECORD_AUDIO, permission.WRITE_EXTERNAL_STORAGE, permission.WAKE_LOCK) else arrayOf(
+                    permission.CAMERA,
+                    permission.WRITE_EXTERNAL_STORAGE,
+                    permission.WAKE_LOCK
+                ),
+                CAMERA_REQUEST_ID
+            )
         } else {
             // Permissions already exist. Call the callback with success.
             callback.onResult(null, null)

@@ -48,7 +48,6 @@ class MethodCallHandlerImplNew(
             .registerViewFactory("hybrid-view-type", nativeViewFactory as NativeViewFactory)
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
             "availableCameras" -> try {
@@ -192,7 +191,6 @@ class MethodCallHandlerImplNew(
         methodChannel.setMethodCallHandler(null)
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @Throws(CameraAccessException::class)
     private fun instantiateCamera(call: MethodCall, result: MethodChannel.Result) {
         handler.postDelayed({
@@ -232,7 +230,6 @@ class MethodCallHandlerImplNew(
     // We move catching CameraAccessException out of onMethodCall because it causes a crash
     // on plugin registration for sdks incompatible with Camera2 (< 21). We want this plugin to
     // to be able to compile with <21 sdks for apps that want the camera and support earlier version.
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun handleException(exception: Exception, result: MethodChannel.Result) {
         if (exception is CameraAccessException) {
             result.error("CameraAccess", exception.message, null)
