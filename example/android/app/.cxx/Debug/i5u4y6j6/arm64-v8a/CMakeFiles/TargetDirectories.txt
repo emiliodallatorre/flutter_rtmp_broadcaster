@@ -1,0 +1,2 @@
+/Users/irvinmendez/Desktop/flutter_rtmp_broadcaster/example/android/app/.cxx/Debug/i5u4y6j6/arm64-v8a/CMakeFiles/rebuild_cache.dir
+/Users/irvinmendez/Desktop/flutter_rtmp_broadcaster/example/android/app/.cxx/Debug/i5u4y6j6/arm64-v8a/CMakeFiles/edit_cache.dir

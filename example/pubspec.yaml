@@ -13,10 +13,11 @@ dependencies:
   rtmp_broadcaster:
     path: ../
 
-  path_provider: ^2.0.15
+  path_provider: ^2.1.5
   cupertino_icons: ^1.0.5
   video_player: ^2.7.0
-  wakelock: ^0.6.2
+  wakelock_plus: ^1.2.10
+  
 
 dev_dependencies:
   flutter_test:
