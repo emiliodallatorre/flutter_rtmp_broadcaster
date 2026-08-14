@@ -3,6 +3,8 @@
 //
 // Shells out to `dart run dart_apitool:main diff`, comparing against
 // pub://rtmp_broadcaster/2.3.4, so it requires network access to pub.dev.
+@Tags(<String>['api-consistency'])
+library;
 
 import 'dart:convert';
 import 'dart:io';

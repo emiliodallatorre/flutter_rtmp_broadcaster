@@ -59,7 +59,10 @@ jobs:
       - run: dart --version
       - run: flutter --version
       - run: flutter pub get
-      - run: flutter test
+      - run: flutter test --exclude-tags=api-consistency
+      - name: Check public API consistency against 2.3.4
+        run: flutter test --tags=api-consistency
+        continue-on-error: true
       - name: Build example Android APK (also lints the plugin's Kotlin sources)
         if: startsWith(matrix.os, 'ubuntu')
         run: |
