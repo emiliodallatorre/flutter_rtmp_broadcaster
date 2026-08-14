@@ -10,9 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  cross_file: ^0.3.1
+  path_provider: ^2.0.13
 
 dev_dependencies:
-  path_provider: ^2.0.13
   video_player: ^2.9.2
   dart_apitool: ^0.23.2
 

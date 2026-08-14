@@ -5,9 +5,11 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:cross_file/cross_file.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:path_provider/path_provider.dart';
 
 part 'camera_image.dart';
 
@@ -41,6 +43,73 @@ enum ResolutionPreset {
 
 // ignore: inference_failure_on_function_return_type
 typedef LatestImageCallback = Function(CameraImage image);
+
+/// The possible flash modes that can be set for a camera.
+enum FlashMode {
+  /// Do not use the flash when taking a picture.
+  off,
+
+  /// Let the device decide whether to flash the camera when taking a picture.
+  auto,
+
+  /// Always use the flash when taking a picture.
+  always,
+
+  /// Turns on the flash light and keeps it on until switched off.
+  torch,
+}
+
+/// Returns the flash mode as a String.
+String serializeFlashMode(FlashMode flashMode) {
+  switch (flashMode) {
+    case FlashMode.off:
+      return 'off';
+    case FlashMode.auto:
+      return 'auto';
+    case FlashMode.always:
+      return 'always';
+    case FlashMode.torch:
+      return 'torch';
+  }
+}
+
+/// The possible exposure modes that can be set for a camera.
+enum ExposureMode {
+  /// Automatically determine exposure settings.
+  auto,
+
+  /// Lock the currently determined exposure settings.
+  locked,
+}
+
+/// Returns the exposure mode as a String.
+String serializeExposureMode(ExposureMode exposureMode) {
+  switch (exposureMode) {
+    case ExposureMode.auto:
+      return 'auto';
+    case ExposureMode.locked:
+      return 'locked';
+  }
+}
+
+/// The possible focus modes that can be set for a camera.
+enum FocusMode {
+  /// Automatically determine focus settings.
+  auto,
+
+  /// Lock the currently determined focus settings.
+  locked,
+}
+
+/// Returns the focus mode as a String.
+String serializeFocusMode(FocusMode focusMode) {
+  switch (focusMode) {
+    case FocusMode.auto:
+      return 'auto';
+    case FocusMode.locked:
+      return 'locked';
+  }
+}
 
 /// Returns the resolution preset as a String.
 String serializeResolutionPreset(ResolutionPreset resolutionPreset) {
@@ -211,6 +280,9 @@ class CameraValue {
     this.isStreamingImages,
     this.isStreamingVideoRtmp,
     this.event,
+    this.flashMode = FlashMode.auto,
+    this.exposureMode = ExposureMode.auto,
+    this.focusMode = FocusMode.auto,
     bool? isRecordingPaused,
     bool? isStreamingPaused,
   })  : _isRecordingPaused = isRecordingPaused,
@@ -268,6 +340,15 @@ class CameraValue {
   /// Raw event info
   final dynamic event;
 
+  /// The flash mode the camera is currently set to.
+  final FlashMode flashMode;
+
+  /// The exposure mode the camera is currently set to.
+  final ExposureMode exposureMode;
+
+  /// The focus mode the camera is currently set to.
+  final FocusMode focusMode;
+
   /// Convenience getter for `previewSize.height / previewSize.width`.
   ///
   /// Can only be called when [initialize] is done.
@@ -287,6 +368,9 @@ class CameraValue {
     bool? isRecordingPaused,
     bool? isStreamingPaused,
     dynamic event,
+    FlashMode? flashMode,
+    ExposureMode? exposureMode,
+    FocusMode? focusMode,
   }) {
     return CameraValue(
       isInitialized: isInitialized ?? this.isInitialized,
@@ -300,6 +384,9 @@ class CameraValue {
       isRecordingPaused: isRecordingPaused ?? _isRecordingPaused,
       isStreamingPaused: isStreamingPaused ?? _isStreamingPaused,
       event: event,
+      flashMode: flashMode ?? this.flashMode,
+      exposureMode: exposureMode ?? this.exposureMode,
+      focusMode: focusMode ?? this.focusMode,
     );
   }
 
@@ -341,6 +428,7 @@ class CameraController extends ValueNotifier<CameraValue> {
   final bool enableAudio;
 
   int? _textureId;
+  String? _videoRecordingPath;
   bool _isDisposed = false;
   StreamSubscription<dynamic>? _eventSubscription;
   StreamSubscription<dynamic>? _imageStreamSubscription;
@@ -501,6 +589,20 @@ class CameraController extends ValueNotifier<CameraValue> {
     }
   }
 
+  /// Captures an image and returns the file where it was saved.
+  ///
+  /// The file is saved to a temporary directory managed by the plugin;
+  /// use [takePicture] instead if a specific destination path is required.
+  ///
+  /// Throws a [CameraException] if the capture fails.
+  Future<XFile> takePictureXFile() async {
+    final Directory tempDir = await getTemporaryDirectory();
+    final String path =
+        '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
+    await takePicture(path);
+    return XFile(path);
+  }
+
   /// Start streaming images from platform camera.
   ///
   /// Settings for capturing images on iOS and Android is set to always use the
@@ -656,6 +758,7 @@ class CameraController extends ValueNotifier<CameraValue> {
         'startVideoRecording',
         <String, dynamic>{'textureId': _textureId, 'filePath': filePath},
       );
+      _videoRecordingPath = filePath;
       value = value.copyWith(isRecordingVideo: true, isRecordingPaused: false);
     } on PlatformException catch (e) {
       throw CameraException(e.code, e.message);
@@ -686,6 +789,24 @@ class CameraController extends ValueNotifier<CameraValue> {
     } on PlatformException catch (e) {
       throw CameraException(e.code, e.message);
     }
+  }
+
+  /// Stops the video recording and returns the file where it was saved.
+  ///
+  /// Throws a [CameraException] if the capture failed, or if
+  /// [startVideoRecording] was never called before this recording.
+  Future<XFile> stopVideoRecordingXFile() async {
+    final String? path = _videoRecordingPath;
+    if (path == null) {
+      throw CameraException(
+        'No recording path available',
+        'stopVideoRecordingXFile was called without a prior '
+            'startVideoRecording call.',
+      );
+    }
+    await stopVideoRecording();
+    _videoRecordingPath = null;
+    return XFile(path);
   }
 
   /// Pause video recording.
@@ -940,6 +1061,132 @@ class CameraController extends ValueNotifier<CameraValue> {
         'resumeVideoStreaming',
         <String, dynamic>{'textureId': _textureId},
       );
+    } on PlatformException catch (e) {
+      throw CameraException(e.code, e.message);
+    }
+  }
+
+  /// Gets the maximum supported zoom level for the selected camera.
+  Future<double> getMaxZoomLevel() async {
+    if (!value.isInitialized! || _isDisposed) {
+      throw CameraException(
+        'Uninitialized CameraController',
+        'getMaxZoomLevel was called on uninitialized CameraController.',
+      );
+    }
+    try {
+      final double maxZoomLevel = (await _channel.invokeMethod<double>(
+        'getMaxZoomLevel',
+        <String, dynamic>{'textureId': _textureId},
+      ))!;
+      return maxZoomLevel;
+    } on PlatformException catch (e) {
+      throw CameraException(e.code, e.message);
+    }
+  }
+
+  /// Gets the minimum supported zoom level for the selected camera.
+  Future<double> getMinZoomLevel() async {
+    if (!value.isInitialized! || _isDisposed) {
+      throw CameraException(
+        'Uninitialized CameraController',
+        'getMinZoomLevel was called on uninitialized CameraController.',
+      );
+    }
+    try {
+      final double minZoomLevel = (await _channel.invokeMethod<double>(
+        'getMinZoomLevel',
+        <String, dynamic>{'textureId': _textureId},
+      ))!;
+      return minZoomLevel;
+    } on PlatformException catch (e) {
+      throw CameraException(e.code, e.message);
+    }
+  }
+
+  /// Set the zoom level for the selected camera.
+  ///
+  /// The supplied [zoom] value should be between 1.0 and the maximum
+  /// supported zoom level returned by [getMaxZoomLevel]. Throws a
+  /// [CameraException] when an illegal zoom level is supplied.
+  Future<void> setZoomLevel(double zoom) async {
+    if (!value.isInitialized! || _isDisposed) {
+      throw CameraException(
+        'Uninitialized CameraController',
+        'setZoomLevel was called on uninitialized CameraController.',
+      );
+    }
+    try {
+      await _channel.invokeMethod<void>(
+        'setZoomLevel',
+        <String, dynamic>{'textureId': _textureId, 'zoom': zoom},
+      );
+    } on PlatformException catch (e) {
+      throw CameraException(e.code, e.message);
+    }
+  }
+
+  /// Sets the flash mode for taking pictures.
+  Future<void> setFlashMode(FlashMode mode) async {
+    if (!value.isInitialized! || _isDisposed) {
+      throw CameraException(
+        'Uninitialized CameraController',
+        'setFlashMode was called on uninitialized CameraController.',
+      );
+    }
+    try {
+      await _channel.invokeMethod<void>(
+        'setFlashMode',
+        <String, dynamic>{
+          'textureId': _textureId,
+          'mode': serializeFlashMode(mode),
+        },
+      );
+      value = value.copyWith(flashMode: mode);
+    } on PlatformException catch (e) {
+      throw CameraException(e.code, e.message);
+    }
+  }
+
+  /// Sets the exposure mode for taking pictures.
+  Future<void> setExposureMode(ExposureMode mode) async {
+    if (!value.isInitialized! || _isDisposed) {
+      throw CameraException(
+        'Uninitialized CameraController',
+        'setExposureMode was called on uninitialized CameraController.',
+      );
+    }
+    try {
+      await _channel.invokeMethod<void>(
+        'setExposureMode',
+        <String, dynamic>{
+          'textureId': _textureId,
+          'mode': serializeExposureMode(mode),
+        },
+      );
+      value = value.copyWith(exposureMode: mode);
+    } on PlatformException catch (e) {
+      throw CameraException(e.code, e.message);
+    }
+  }
+
+  /// Sets the focus mode for taking pictures.
+  Future<void> setFocusMode(FocusMode mode) async {
+    if (!value.isInitialized! || _isDisposed) {
+      throw CameraException(
+        'Uninitialized CameraController',
+        'setFocusMode was called on uninitialized CameraController.',
+      );
+    }
+    try {
+      await _channel.invokeMethod<void>(
+        'setFocusMode',
+        <String, dynamic>{
+          'textureId': _textureId,
+          'mode': serializeFocusMode(mode),
+        },
+      );
+      value = value.copyWith(focusMode: mode);
     } on PlatformException catch (e) {
       throw CameraException(e.code, e.message);
     }
