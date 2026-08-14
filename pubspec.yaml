@@ -14,6 +14,7 @@ dependencies:
 dev_dependencies:
   path_provider: ^2.0.13
   video_player: ^2.9.2
+  dart_apitool: ^0.23.2
 
   flutter_test:
     sdk: flutter

@@ -1,0 +1,1751 @@
+{
+    "version": 3,
+    "packageApi": {
+        "packageName": "rtmp_broadcaster",
+        "packageVersion": "2.3.4",
+        "interfaceDeclarations": [
+            {
+                "name": "CameraDescription",
+                "isDeprecated": false,
+                "isExperimental": false,
+                "isSealed": false,
+                "isRequired": false,
+                "typeParameterNames": [],
+                "superTypeNames": [
+                    "Object"
+                ],
+                "executableDeclarations": [
+                    {
+                        "returnTypeName": "CameraDescription",
+                        "name": "new",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "name",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "String?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "lensDirection",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "CameraLensDirection?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "sensorOrientation",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "int?",
+                                "relativePath": "lib/camera.dart"
+                            }
+                        ],
+                        "typeParameterNames": [],
+                        "type": "constructor",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    }
+                ],
+                "fieldDeclarations": [
+                    {
+                        "typeName": "String?",
+                        "name": "name",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "CameraLensDirection?",
+                        "name": "lensDirection",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int?",
+                        "name": "sensorOrientation",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int",
+                        "name": "hashCode",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    }
+                ],
+                "entryPoints": [
+                    "camera.dart"
+                ],
+                "relativePath": "lib/camera.dart"
+            },
+            {
+                "name": "CameraLensDirection",
+                "isDeprecated": false,
+                "isExperimental": false,
+                "isSealed": false,
+                "isRequired": false,
+                "typeParameterNames": [],
+                "superTypeNames": [
+                    "Enum",
+                    "Object"
+                ],
+                "executableDeclarations": [],
+                "fieldDeclarations": [
+                    {
+                        "typeName": "CameraLensDirection",
+                        "name": "front",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": true,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "CameraLensDirection",
+                        "name": "back",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": true,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "CameraLensDirection",
+                        "name": "external",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": true,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "List<CameraLensDirection>",
+                        "name": "values",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": true,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    }
+                ],
+                "entryPoints": [
+                    "camera.dart"
+                ],
+                "relativePath": "lib/camera.dart"
+            },
+            {
+                "name": "StreamStatistics",
+                "isDeprecated": false,
+                "isExperimental": false,
+                "isSealed": false,
+                "isRequired": false,
+                "typeParameterNames": [],
+                "superTypeNames": [
+                    "Object"
+                ],
+                "executableDeclarations": [
+                    {
+                        "returnTypeName": "StreamStatistics",
+                        "name": "new",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [
+                            {
+                                "isRequired": true,
+                                "isNamed": true,
+                                "name": "cacheSize",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "int?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": true,
+                                "isNamed": true,
+                                "name": "sentAudioFrames",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "int?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": true,
+                                "isNamed": true,
+                                "name": "sentVideoFrames",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "int?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": true,
+                                "isNamed": true,
+                                "name": "droppedAudioFrames",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "int?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": true,
+                                "isNamed": true,
+                                "name": "droppedVideoFrames",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "int?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": true,
+                                "isNamed": true,
+                                "name": "bitrate",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "int?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": true,
+                                "isNamed": true,
+                                "name": "width",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "int?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": true,
+                                "isNamed": true,
+                                "name": "height",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "int?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": true,
+                                "isNamed": true,
+                                "name": "isAudioMuted",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            }
+                        ],
+                        "typeParameterNames": [],
+                        "type": "constructor",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    }
+                ],
+                "fieldDeclarations": [
+                    {
+                        "typeName": "int?",
+                        "name": "cacheSize",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int?",
+                        "name": "sentAudioFrames",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int?",
+                        "name": "sentVideoFrames",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int?",
+                        "name": "droppedAudioFrames",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int?",
+                        "name": "droppedVideoFrames",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "bool?",
+                        "name": "isAudioMuted",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int?",
+                        "name": "bitrate",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int?",
+                        "name": "width",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int?",
+                        "name": "height",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    }
+                ],
+                "entryPoints": [
+                    "camera.dart"
+                ],
+                "relativePath": "lib/camera.dart"
+            },
+            {
+                "name": "CameraException",
+                "isDeprecated": false,
+                "isExperimental": false,
+                "isSealed": false,
+                "isRequired": false,
+                "typeParameterNames": [],
+                "superTypeNames": [
+                    "Object",
+                    "Exception"
+                ],
+                "executableDeclarations": [
+                    {
+                        "returnTypeName": "CameraException",
+                        "name": "new",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [
+                            {
+                                "isRequired": true,
+                                "isNamed": false,
+                                "name": "code",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "String",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": true,
+                                "isNamed": false,
+                                "name": "description",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "String?",
+                                "relativePath": "lib/camera.dart"
+                            }
+                        ],
+                        "typeParameterNames": [],
+                        "type": "constructor",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    }
+                ],
+                "fieldDeclarations": [
+                    {
+                        "typeName": "String",
+                        "name": "code",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": true
+                    },
+                    {
+                        "typeName": "String?",
+                        "name": "description",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": true
+                    }
+                ],
+                "entryPoints": [
+                    "camera.dart"
+                ],
+                "relativePath": "lib/camera.dart"
+            },
+            {
+                "name": "CameraPreview",
+                "isDeprecated": false,
+                "isExperimental": false,
+                "isSealed": false,
+                "isRequired": false,
+                "typeParameterNames": [],
+                "superTypeNames": [
+                    "StatelessWidget",
+                    "Widget",
+                    "DiagnosticableTree",
+                    "Object",
+                    "Diagnosticable"
+                ],
+                "executableDeclarations": [
+                    {
+                        "returnTypeName": "CameraPreview",
+                        "name": "new",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [
+                            {
+                                "isRequired": true,
+                                "isNamed": false,
+                                "name": "controller",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "CameraController",
+                                "relativePath": "lib/camera.dart"
+                            }
+                        ],
+                        "typeParameterNames": [],
+                        "type": "constructor",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    }
+                ],
+                "fieldDeclarations": [
+                    {
+                        "typeName": "CameraController",
+                        "name": "controller",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    }
+                ],
+                "entryPoints": [
+                    "camera.dart"
+                ],
+                "relativePath": "lib/camera.dart"
+            },
+            {
+                "name": "CameraController",
+                "isDeprecated": false,
+                "isExperimental": false,
+                "isSealed": false,
+                "isRequired": false,
+                "typeParameterNames": [],
+                "superTypeNames": [
+                    "ValueNotifier<CameraValue>",
+                    "ChangeNotifier",
+                    "Object",
+                    "Listenable",
+                    "ValueListenable<CameraValue>"
+                ],
+                "executableDeclarations": [
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "initialize",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "prepareForVideoRecording",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "prepareForVideoStreaming",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "takePicture",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [
+                            {
+                                "isRequired": true,
+                                "isNamed": false,
+                                "name": "path",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "String",
+                                "relativePath": "lib/camera.dart"
+                            }
+                        ],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "startImageStream",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [
+                            {
+                                "isRequired": true,
+                                "isNamed": false,
+                                "name": "onAvailable",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "dynamic Function(CameraImage)",
+                                "relativePath": "lib/camera.dart"
+                            }
+                        ],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "stopImageStream",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<StreamStatistics>",
+                        "name": "getStreamStatistics",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "startVideoRecording",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [
+                            {
+                                "isRequired": true,
+                                "isNamed": false,
+                                "name": "filePath",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "String",
+                                "relativePath": "lib/camera.dart"
+                            }
+                        ],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "stopVideoRecording",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "pauseVideoRecording",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "resumeVideoRecording",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "startVideoRecordingAndStreaming",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [
+                            {
+                                "isRequired": true,
+                                "isNamed": false,
+                                "name": "filePath",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "String",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": true,
+                                "isNamed": false,
+                                "name": "url",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "String",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "bitrate",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "int",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "androidUseOpenGL",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            }
+                        ],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "startVideoStreaming",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [
+                            {
+                                "isRequired": true,
+                                "isNamed": false,
+                                "name": "url",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "String",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "bitrate",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "int",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "androidUseOpenGL",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            }
+                        ],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "stopVideoStreaming",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "stopEverything",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "pauseVideoStreaming",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "Future<void>",
+                        "name": "resumeVideoStreaming",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "CameraController",
+                        "name": "new",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [
+                            {
+                                "isRequired": true,
+                                "isNamed": false,
+                                "name": "description",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "CameraDescription",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": true,
+                                "isNamed": false,
+                                "name": "resolutionPreset",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "ResolutionPreset",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "enableAudio",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "streamingPreset",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "ResolutionPreset?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "androidUseOpenGL",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool",
+                                "relativePath": "lib/camera.dart"
+                            }
+                        ],
+                        "typeParameterNames": [],
+                        "type": "constructor",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    }
+                ],
+                "fieldDeclarations": [
+                    {
+                        "typeName": "CameraDescription",
+                        "name": "description",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "ResolutionPreset",
+                        "name": "resolutionPreset",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "ResolutionPreset?",
+                        "name": "streamingPreset",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "bool",
+                        "name": "enableAudio",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "bool",
+                        "name": "androidUseOpenGL",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    }
+                ],
+                "entryPoints": [
+                    "camera.dart"
+                ],
+                "relativePath": "lib/camera.dart"
+            },
+            {
+                "name": "CameraValue",
+                "isDeprecated": false,
+                "isExperimental": false,
+                "isSealed": false,
+                "isRequired": false,
+                "typeParameterNames": [],
+                "superTypeNames": [
+                    "Object"
+                ],
+                "executableDeclarations": [
+                    {
+                        "returnTypeName": "CameraValue",
+                        "name": "copyWith",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "isInitialized",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "isRecordingVideo",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "isStreamingVideoRtmp",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "isTakingPicture",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "isStreamingImages",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "errorDescription",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "String?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "previewSize",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "Size?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "previewQuarterTurns",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "int?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "isRecordingPaused",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "isStreamingPaused",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "event",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "dynamic",
+                                "relativePath": "lib/camera.dart"
+                            }
+                        ],
+                        "typeParameterNames": [],
+                        "type": "method",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "CameraValue",
+                        "name": "new",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "isInitialized",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "errorDescription",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "String?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "previewSize",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "Size?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "previewQuarterTurns",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "int?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "isRecordingVideo",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "isTakingPicture",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "isStreamingImages",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "isStreamingVideoRtmp",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "event",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "dynamic",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "isRecordingPaused",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            },
+                            {
+                                "isRequired": false,
+                                "isNamed": true,
+                                "name": "isStreamingPaused",
+                                "isDeprecated": false,
+                                "isExperimental": false,
+                                "typeName": "bool?",
+                                "relativePath": "lib/camera.dart"
+                            }
+                        ],
+                        "typeParameterNames": [],
+                        "type": "constructor",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    },
+                    {
+                        "returnTypeName": "CameraValue",
+                        "name": "uninitialized",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "parameters": [],
+                        "typeParameterNames": [],
+                        "type": "constructor",
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart"
+                    }
+                ],
+                "fieldDeclarations": [
+                    {
+                        "typeName": "bool?",
+                        "name": "isInitialized",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "bool?",
+                        "name": "isTakingPicture",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "bool?",
+                        "name": "isRecordingVideo",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "bool?",
+                        "name": "isStreamingVideoRtmp",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "bool?",
+                        "name": "isStreamingImages",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "bool",
+                        "name": "isRecordingPaused",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "bool",
+                        "name": "isStreamingPaused",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "String?",
+                        "name": "errorDescription",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "Size?",
+                        "name": "previewSize",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int?",
+                        "name": "previewQuarterTurns",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "dynamic",
+                        "name": "event",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "double",
+                        "name": "aspectRatio",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "bool",
+                        "name": "hasError",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    }
+                ],
+                "entryPoints": [
+                    "camera.dart"
+                ],
+                "relativePath": "lib/camera.dart"
+            },
+            {
+                "name": "ResolutionPreset",
+                "isDeprecated": false,
+                "isExperimental": false,
+                "isSealed": false,
+                "isRequired": false,
+                "typeParameterNames": [],
+                "superTypeNames": [
+                    "Enum",
+                    "Object"
+                ],
+                "executableDeclarations": [],
+                "fieldDeclarations": [
+                    {
+                        "typeName": "ResolutionPreset",
+                        "name": "low",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": true,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "ResolutionPreset",
+                        "name": "medium",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": true,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "ResolutionPreset",
+                        "name": "high",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": true,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "ResolutionPreset",
+                        "name": "veryHigh",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": true,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "ResolutionPreset",
+                        "name": "ultraHigh",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": true,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "ResolutionPreset",
+                        "name": "max",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": true,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "List<ResolutionPreset>",
+                        "name": "values",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": true,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    }
+                ],
+                "entryPoints": [
+                    "camera.dart"
+                ],
+                "relativePath": "lib/camera.dart"
+            },
+            {
+                "name": "Plane",
+                "isDeprecated": false,
+                "isExperimental": false,
+                "isSealed": false,
+                "isRequired": false,
+                "typeParameterNames": [],
+                "superTypeNames": [
+                    "Object"
+                ],
+                "executableDeclarations": [],
+                "fieldDeclarations": [
+                    {
+                        "typeName": "Uint8List?",
+                        "name": "bytes",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int?",
+                        "name": "bytesPerPixel",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int?",
+                        "name": "bytesPerRow",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int?",
+                        "name": "height",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int?",
+                        "name": "width",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    }
+                ],
+                "entryPoints": [
+                    "camera.dart"
+                ],
+                "relativePath": "lib/camera.dart"
+            },
+            {
+                "name": "ImageFormat",
+                "isDeprecated": false,
+                "isExperimental": false,
+                "isSealed": false,
+                "isRequired": false,
+                "typeParameterNames": [],
+                "superTypeNames": [
+                    "Object"
+                ],
+                "executableDeclarations": [],
+                "fieldDeclarations": [
+                    {
+                        "typeName": "ImageFormatGroup",
+                        "name": "group",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "dynamic",
+                        "name": "raw",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    }
+                ],
+                "entryPoints": [
+                    "camera.dart"
+                ],
+                "relativePath": "lib/camera.dart"
+            },
+            {
+                "name": "ImageFormatGroup",
+                "isDeprecated": false,
+                "isExperimental": false,
+                "isSealed": false,
+                "isRequired": false,
+                "typeParameterNames": [],
+                "superTypeNames": [
+                    "Enum",
+                    "Object"
+                ],
+                "executableDeclarations": [],
+                "fieldDeclarations": [
+                    {
+                        "typeName": "ImageFormatGroup",
+                        "name": "unknown",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": true,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "ImageFormatGroup",
+                        "name": "yuv420",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": true,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "ImageFormatGroup",
+                        "name": "bgra8888",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": true,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "List<ImageFormatGroup>",
+                        "name": "values",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": true,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    }
+                ],
+                "entryPoints": [
+                    "camera.dart"
+                ],
+                "relativePath": "lib/camera.dart"
+            },
+            {
+                "name": "CameraImage",
+                "isDeprecated": false,
+                "isExperimental": false,
+                "isSealed": false,
+                "isRequired": false,
+                "typeParameterNames": [],
+                "superTypeNames": [
+                    "Object"
+                ],
+                "executableDeclarations": [],
+                "fieldDeclarations": [
+                    {
+                        "typeName": "ImageFormat",
+                        "name": "format",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int?",
+                        "name": "height",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "int?",
+                        "name": "width",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    },
+                    {
+                        "typeName": "List<Plane>",
+                        "name": "planes",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "isStatic": false,
+                        "entryPoints": [],
+                        "relativePath": "lib/camera.dart",
+                        "isReadable": true,
+                        "isWriteable": false
+                    }
+                ],
+                "entryPoints": [
+                    "camera.dart"
+                ],
+                "relativePath": "lib/camera.dart"
+            }
+        ],
+        "executableDeclarations": [
+            {
+                "returnTypeName": "String",
+                "name": "serializeResolutionPreset",
+                "isDeprecated": false,
+                "isExperimental": false,
+                "parameters": [
+                    {
+                        "isRequired": true,
+                        "isNamed": false,
+                        "name": "resolutionPreset",
+                        "isDeprecated": false,
+                        "isExperimental": false,
+                        "typeName": "ResolutionPreset",
+                        "relativePath": "lib/camera.dart"
+                    }
+                ],
+                "typeParameterNames": [],
+                "type": "method",
+                "isStatic": true,
+                "entryPoints": [
+                    "camera.dart"
+                ],
+                "relativePath": "lib/camera.dart"
+            },
+            {
+                "returnTypeName": "Future<List<CameraDescription>>",
+                "name": "availableCameras",
+                "isDeprecated": false,
+                "isExperimental": false,
+                "parameters": [],
+                "typeParameterNames": [],
+                "type": "method",
+                "isStatic": true,
+                "entryPoints": [
+                    "camera.dart"
+                ],
+                "relativePath": "lib/camera.dart"
+            }
+        ],
+        "fieldDeclarations": [],
+        "typeAliasDeclarations": [
+            {
+                "name": "LatestImageCallback",
+                "aliasedTypeName": "dynamic Function(CameraImage)",
+                "isDeprecated": false,
+                "isExperimental": false,
+                "entryPoints": [
+                    "camera.dart"
+                ],
+                "relativePath": "lib/camera.dart"
+            }
+        ],
+        "semantics": [
+            "containsPlatformConstraints"
+        ],
+        "iosPlatformConstraints": {
+            "minimumOsVersion": 10.0
+        },
+        "androidPlatformConstraints": {
+            "minSdkVersion": 21,
+            "compileSdkVersion": 33,
+            "targetSdkVersion": null
+        },
+        "sdkType": "flutter",
+        "minSdkVersion": "3.4.0",
+        "packageDependencies": []
+    },
+    "missingEntryPoints": []
+}
