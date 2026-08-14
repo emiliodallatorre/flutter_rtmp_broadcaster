@@ -13,7 +13,6 @@ import android.media.CamcorderProfile
 import android.os.Build
 import android.util.Size
 import androidx.annotation.RequiresApi
-import com.app.rtmp_publisher.Camera.ResolutionPreset
 import java.util.*
 
 

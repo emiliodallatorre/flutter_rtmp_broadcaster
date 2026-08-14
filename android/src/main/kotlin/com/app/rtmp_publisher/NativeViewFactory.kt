@@ -13,7 +13,7 @@ internal class NativeViewFactory(private val activity: Activity) : PlatformViewF
 
     var cameraNativeView: CameraNativeView? = null
     var cameraName: String = "0"
-    var preset: Camera.ResolutionPreset = Camera.ResolutionPreset.low
+    var preset: ResolutionPreset = ResolutionPreset.low
     var enableAudio: Boolean = false
     var dartMessenger: DartMessenger? = null
 
