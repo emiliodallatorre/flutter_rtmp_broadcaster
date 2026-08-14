@@ -2,56 +2,72 @@ name: Dart CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, features/modernizing ]
   pull_request:
     branches: [ master ]
 
+env:
+  FLUTTER_VERSION: 3.44.9
+  JAVA_VERSION: '17'
+
 jobs:
+  analyze:
+    name: Analyze (dart analyze)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+      - run: flutter pub get
+      - run: dart analyze
+
   test:
     name: Test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        include:
-          - os: ubuntu-latest
-            flutter_path: /opt/hostedtoolcache/flutter
-          - os: macos-latest
-            flutter_path: /Users/runner/hostedtoolcache/flutter    
     steps:
-      - run: sudo mkdir ${ANDROID_HOME}/ndk
-        if: startsWith(matrix.os,'ubuntu')
-      - name: Cache ndk
-        uses: actions/cache@v2
-        if: startsWith(matrix.os,'ubuntu')
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
-          path: |
-            ${ANDROID_HOME}/ndk
-          key: ${{ runner.os }}-ndk
-      - uses: actions/checkout@v1
-      - run: ./scripts/setup-env.sh
-      - name: Cache Flutter dependencies
-        uses: actions/cache@v1
-        with:
-          path: ${{ matrix.flutter_path }}
-          key: ${{ runner.OS }}-flutter-install-cache-${{ env.FLUTTER_VERSION }}
-      - uses: actions/setup-java@v1
-        with:
+          distribution: 'temurin'
           java-version: ${{ env.JAVA_VERSION }}
-      - name: Install NDK
-        run: echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;20.0.5594570" --sdk_root=${ANDROID_SDK_ROOT}
-        if: startsWith(matrix.os,'ubuntu')
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: 'stable'
+          cache: true
+      - name: Cache Gradle
+        if: startsWith(matrix.os, 'ubuntu')
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('example/android/**/*.gradle*', 'android/**/*.gradle*') }}
+      - name: Cache CocoaPods
+        if: startsWith(matrix.os, 'macOS')
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/CocoaPods
+            example/ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('example/ios/Podfile.lock') }}
       - run: dart --version
       - run: flutter --version
       - run: flutter pub get
       - run: flutter test
-      - run: flutter build apk
-        if: startsWith(matrix.os,'ubuntu')
+      - name: Build example Android APK (also lints the plugin's Kotlin sources)
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          flutter build apk --debug
+          cd android && ./gradlew :rtmp_broadcaster:lintDebug
         working-directory: example
-      - run: flutter build ios --debug --no-codesign
-        if: startsWith(matrix.os,'macOS')
+      - name: Build example iOS app (also compiles the plugin's Swift/Obj-C sources)
+        if: startsWith(matrix.os, 'macOS')
+        run: flutter build ios --debug --no-codesign
         working-directory: example
