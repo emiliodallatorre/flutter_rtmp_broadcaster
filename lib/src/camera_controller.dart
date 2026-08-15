@@ -249,6 +249,14 @@ class CameraController extends ValueNotifier<CameraValue> {
   StreamSubscription<dynamic>? _imageStreamSubscription;
   Completer<void>? _creatingCompleter;
 
+  /// Completes once the native camera preview surface has been created.
+  ///
+  /// On Android, the preview surface is created asynchronously after
+  /// [initialize] resolves and the [CameraPreview] widget is built, so
+  /// starting RTMP streaming too early can hang indefinitely. See
+  /// https://github.com/emiliodallatorre/flutter_rtmp_broadcaster/issues/15.
+  Completer<void>? _surfaceReadyCompleter;
+
   /// Whether the Android platform view should be composed using OpenGL.
   final bool androidUseOpenGL;
 
@@ -261,6 +269,7 @@ class CameraController extends ValueNotifier<CameraValue> {
     }
     try {
       _creatingCompleter = Completer<void>();
+      _surfaceReadyCompleter = Completer<void>();
       final Map<String, dynamic> reply =
           (await _channel.invokeMapMethod<String, dynamic>(
         'initialize',
@@ -371,6 +380,13 @@ class CameraController extends ValueNotifier<CameraValue> {
       case 'rotation_update':
         value = value.copyWith(
             previewQuarterTurns: int.parse(errorDescription!), event: uniEvent);
+        break;
+      case 'camera_ready':
+        if (_surfaceReadyCompleter != null &&
+            !_surfaceReadyCompleter!.isCompleted) {
+          _surfaceReadyCompleter!.complete();
+        }
+        value = value.copyWith(event: uniEvent);
         break;
       default:
         value = value.copyWith(event: uniEvent);
@@ -720,6 +736,13 @@ class CameraController extends ValueNotifier<CameraValue> {
       );
     }
 
+    // The Android preview surface is created asynchronously after
+    // [initialize] resolves. Starting streaming before it exists can hang
+    // indefinitely, so wait for it here.
+    if (Platform.isAndroid) {
+      await _surfaceReadyCompleter?.future;
+    }
+
     try {
       await _channel.invokeMethod<void>(
           'startVideoRecordingAndStreaming', <String, dynamic>{
@@ -763,6 +786,13 @@ class CameraController extends ValueNotifier<CameraValue> {
         'A camera has started streaming images.',
         'startVideoStreaming was called while a camera was streaming images.',
       );
+    }
+
+    // The Android preview surface is created asynchronously after
+    // [initialize] resolves. Starting streaming before it exists can hang
+    // indefinitely, so wait for it here.
+    if (Platform.isAndroid) {
+      await _surfaceReadyCompleter?.future;
     }
 
     try {

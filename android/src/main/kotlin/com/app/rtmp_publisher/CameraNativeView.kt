@@ -52,6 +52,11 @@ class CameraNativeView(
         Log.d("CameraNativeView", "surfaceCreated")
         isSurfaceCreated = true
         startPreview(cameraName)
+        // Notify Dart once the native preview surface actually exists, so callers can
+        // safely wait for it before starting streaming (see startVideoStreaming in
+        // camera_controller.dart). Without this, startVideoStreaming can be invoked
+        // before the surface is ready, causing it to hang indefinitely.
+        dartMessenger?.sendCameraReadyEvent()
     }
 
     override fun surfaceChanged(p0: SurfaceHolder, p1: Int, p2: Int, p3: Int) {
