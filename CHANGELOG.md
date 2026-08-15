@@ -1,3 +1,11 @@
+## 3.0.1
+
+* Fixed `startVideoStreaming`/`startVideoRecordingAndStreaming` hanging indefinitely on Android when called immediately after `initialize()`, by waiting for the native preview surface to be ready before starting the stream (fixes [#15](https://github.com/emiliodallatorre/flutter_rtmp_broadcaster/issues/15))
+* Added a GitHub Actions workflow to close stale issues and pull requests
+* The pub.dev/GitHub release workflow now waits for the Dart CI workflow to pass on the tagged commit before publishing
+* Added a Docker Compose configuration for a local `mediamtx` RTMP test server
+* Updated the API consistency test baseline reference to version 3.0.0
+
 ## 3.0.0
 
 * Restarted active development of the plugin
