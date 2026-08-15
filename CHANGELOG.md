@@ -16,6 +16,11 @@
 * Added a local RTMP test server (`server/`, via Docker Compose) with a dedicated README
 * Added a GitHub Actions workflow to publish to pub.dev and create a GitHub release on tag push
 * Modernized the CI workflow, running `dart analyze`, tests and example builds on every push
+* **Breaking:** renamed the main library file from `lib/camera.dart` to `lib/rtmp_broadcaster.dart`, to satisfy pub.dev's package validation. Update your imports accordingly:
+
+  ```sh
+  grep -rl "package:rtmp_broadcaster/camera.dart" --include="*.dart" . | xargs sed -i "s#package:rtmp_broadcaster/camera.dart#package:rtmp_broadcaster/rtmp_broadcaster.dart#g"
+  ```
 
 ## 2.3.4
 

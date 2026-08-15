@@ -7,7 +7,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:rtmp_broadcaster/camera.dart';
+import 'package:rtmp_broadcaster/rtmp_broadcaster.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 

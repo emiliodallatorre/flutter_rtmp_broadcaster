@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:rtmp_broadcaster/camera.dart';
+import 'package:rtmp_broadcaster/rtmp_broadcaster.dart';
 
 /// Displays the live camera preview, or a placeholder message when no
 /// camera has been selected/initialized yet.

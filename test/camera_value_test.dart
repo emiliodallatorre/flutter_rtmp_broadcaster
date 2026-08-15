@@ -8,7 +8,7 @@
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rtmp_broadcaster/camera.dart';
+import 'package:rtmp_broadcaster/rtmp_broadcaster.dart';
 
 void main() {
   group('CameraValue.uninitialized', () {
