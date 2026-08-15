@@ -1,3 +1,22 @@
+## 3.0.0
+
+* Restarted active development of the plugin
+* Gradle: bumped `compileSdkVersion`/`buildToolsVersion` to 37 and Android Gradle Plugin to 9.3.1
+* Gradle: bumped Gradle wrapper to 9.5.1
+* Gradle: opted out of AGP's built-in Kotlin and reapplied the classic `kotlin-android` plugin pinned to 2.3.21
+* Gradle: increased Gradle JVM heap to prevent out-of-memory failures during Jetifier transforms
+* Removed the unnecessary `project.clj` packaging exclusion from the example app
+* Restructured `lib/` to match the upstream `camera` package layout
+* Added camera-control and `XFile` capture APIs to `CameraController`
+* Added test coverage tooling with CI reporting
+* Split the example app's single `main.dart` into dedicated screens, widgets and utils
+* Modernized the example app to current Flutter/Dart conventions, with explicit types and null safety
+* Replaced the example app's watch icon with a settings icon
+* Added a `.devcontainer` configuration for a ready-to-use Flutter/Android development environment
+* Added a local RTMP test server (`server/`, via Docker Compose) with a dedicated README
+* Added a GitHub Actions workflow to publish to pub.dev and create a GitHub release on tag push
+* Modernized the CI workflow, running `dart analyze`, tests and example builds on every push
+
 ## 2.3.4
 
 * Updated Dependencies
