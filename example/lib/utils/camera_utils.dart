@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rtmp_broadcaster/camera.dart';
 
@@ -25,5 +24,4 @@ void logError(String code, String message) =>
 
 /// Generates a millisecond-precision timestamp suitable for use as a
 /// unique file name suffix.
-String generateTimestamp() =>
-    DateTime.now().millisecondsSinceEpoch.toString();
+String generateTimestamp() => DateTime.now().millisecondsSinceEpoch.toString();

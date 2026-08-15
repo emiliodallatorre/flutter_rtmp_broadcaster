@@ -15,6 +15,7 @@ class CameraPreviewDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CameraController? controller = this.controller;
+
     if (!(controller?.value.isInitialized ?? false)) {
       return const Text(
         'Tap a camera',
