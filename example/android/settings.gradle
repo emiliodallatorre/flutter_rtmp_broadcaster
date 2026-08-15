@@ -19,6 +19,11 @@ pluginManagement {
 plugins {
     id "dev.flutter.flutter-plugin-loader" version "1.0.0"
     id "com.android.application" version "9.3.1" apply false
+    // AGP 9.3.1's built-in Kotlin (2.2.10) is older than Flutter's minimum
+    // supported Kotlin version (2.2.20), so built-in Kotlin is opted out
+    // (android.builtInKotlin=false in gradle.properties) in favor of this
+    // explicit, newer kotlin-android plugin.
+    id "org.jetbrains.kotlin.android" version "2.3.21" apply false
 }
 
 include ":app"

@@ -10,6 +10,11 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:9.3.1'
+        // AGP 9.3.1's built-in Kotlin (2.2.10) is older than Flutter's
+        // minimum supported Kotlin version (2.2.20), so built-in Kotlin is
+        // opted out (android.builtInKotlin=false in gradle.properties) in
+        // favor of this explicit, newer kotlin-android plugin.
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -22,6 +27,7 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     namespace 'com.app.rtmp_publisher'
