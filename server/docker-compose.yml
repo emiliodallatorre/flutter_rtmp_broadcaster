@@ -1,0 +1,10 @@
+services:
+  mediamtx:
+    image: bluenviron/mediamtx:latest
+    container_name: mediamtx
+    restart: unless-stopped
+    ports:
+      - "1935:1935"       # RTMP ingest
+      - "8888:8888"       # HLS playback
+      - "8889:8889"       # WebRTC playback
+      - "8189:8189/udp"   # WebRTC media
