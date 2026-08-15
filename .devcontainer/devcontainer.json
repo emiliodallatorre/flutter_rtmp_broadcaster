@@ -3,8 +3,15 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
+  // "--network=host" lets the container's adb client reuse the host's
+  // already-running (and already-authorized) adb server over
+  // localhost:5037, instead of spawning its own server inside the
+  // container. Without this, the host's adb server and the container's
+  // adb server fight over an exclusive USBDEVFS_CLAIMINTERFACE lock on
+  // the physical device, and whichever one loses reports no devices.
   "runArgs": [
-    "--privileged"
+    "--privileged",
+    "--network=host"
   ],
   "remoteUser": "vscode",
   "containerEnv": {

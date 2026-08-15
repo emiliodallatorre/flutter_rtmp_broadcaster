@@ -58,5 +58,5 @@ RUN yes | sdkmanager --licenses > /dev/null \
 
 RUN flutter config --no-analytics \
     && flutter config --android-sdk ${ANDROID_HOME} \
-    && mkdir -p /home/${USERNAME}/.pub-cache \
-    && chown -R ${USERNAME}:${USERNAME} ${FLUTTER_ROOT} ${ANDROID_HOME} /home/${USERNAME}/.pub-cache
+    && mkdir -p /home/${USERNAME}/.pub-cache /home/${USERNAME}/.gradle \
+    && chown -R ${USERNAME}:${USERNAME} ${FLUTTER_ROOT} ${ANDROID_HOME} /home/${USERNAME}/.pub-cache /home/${USERNAME}/.gradle
