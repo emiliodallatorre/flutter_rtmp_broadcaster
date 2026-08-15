@@ -6,8 +6,22 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
+  wait-for-ci:
+    name: Wait for Dart CI to pass
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Dart CI checks on this tag
+        uses: lewagon/wait-on-check-action@v1.9.1
+        with:
+          ref: ${{ github.sha }}
+          running-workflow-name: 'Wait for Dart CI to pass'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 15
+          allowed-conclusions: success
+
   verify-version:
     name: Verify tag matches pubspec.yaml version
+    needs: wait-for-ci
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
