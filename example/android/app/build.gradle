@@ -6,8 +6,8 @@ plugins {
 
 android {
     namespace "com.app.rtmp_publisher_example"
-    compileSdkVersion 37
-    buildToolsVersion "37.0.0"
+    compileSdkVersion 36
+    buildToolsVersion "36.0.0"
     ndkVersion flutter.ndkVersion
 
     sourceSets {
@@ -21,7 +21,7 @@ android {
     defaultConfig {
         applicationId "com.app.rtmp_publisher_example"
         minSdkVersion flutter.minSdkVersion
-        targetSdkVersion 37
+        targetSdkVersion 36
         versionCode flutter.versionCode
         versionName flutter.versionName
     }
