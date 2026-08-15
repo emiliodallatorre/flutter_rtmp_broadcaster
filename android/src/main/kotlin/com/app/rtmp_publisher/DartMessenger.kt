@@ -23,7 +23,7 @@ class DartMessenger(messenger: BinaryMessenger, eventChannelId: Long) {
             return
         }
         val event: MutableMap<String, String?> = HashMap()
-        event["eventType"] = eventType.toString().toLowerCase()
+        event["eventType"] = eventType.toString().lowercase()
         // Only errors have a description.
         if (!TextUtils.isEmpty(description)) {
             event["errorDescription"] = description

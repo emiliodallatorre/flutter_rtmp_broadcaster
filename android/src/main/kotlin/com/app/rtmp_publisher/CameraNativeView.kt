@@ -12,38 +12,39 @@ import android.util.Log
 import android.view.SurfaceHolder
 import android.view.View
 import android.widget.Toast
+import com.pedro.common.ConnectChecker
 import com.pedro.encoder.input.video.CameraHelper.Facing.BACK
 import com.pedro.encoder.input.video.CameraHelper.Facing.FRONT
-import com.pedro.rtplibrary.rtmp.RtmpCamera2
-import com.pedro.rtplibrary.view.LightOpenGlView
+import com.pedro.encoder.utils.gl.AspectRatioMode
+import com.pedro.library.rtmp.RtmpCamera2
+import com.pedro.library.view.OpenGlView
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.platform.PlatformView
-import net.ossrs.rtmp.ConnectCheckerRtmp
 import java.io.*
 
 
 class CameraNativeView(
     private var activity: Activity? = null,
     private var enableAudio: Boolean = false,
-    private val preset: Camera.ResolutionPreset,
+    private val preset: ResolutionPreset,
     private var cameraName: String,
     private var dartMessenger: DartMessenger? = null
 ) :
     PlatformView,
     SurfaceHolder.Callback,
-    ConnectCheckerRtmp {
+    ConnectChecker {
 
-    private val glView = LightOpenGlView(activity)
+    private val glView = OpenGlView(activity)
     private val rtmpCamera: RtmpCamera2
 
     private var isSurfaceCreated = false
     private var fps = 0
 
     init {
-        glView.isKeepAspectRatio = true
+        glView.setAspectRatioMode(AspectRatioMode.Adjust)
         glView.holder.addCallback(this)
         rtmpCamera = RtmpCamera2(glView, this)
-        rtmpCamera.setReTries(10)
+        rtmpCamera.getStreamClient().setReTries(10)
         rtmpCamera.setFpsListener { fps = it }
     }
 
@@ -61,18 +62,21 @@ class CameraNativeView(
         // TODO("Not yet implemented")
     }
 
-    override fun onAuthSuccessRtmp() {
+    override fun onAuthSuccess() {
     }
 
-    override fun onNewBitrateRtmp(bitrate: Long) {
+    override fun onNewBitrate(bitrate: Long) {
     }
 
-    override fun onConnectionSuccessRtmp() {
+    override fun onConnectionStarted(url: String) {
     }
 
-    override fun onConnectionFailedRtmp(reason: String) {
+    override fun onConnectionSuccess() {
+    }
+
+    override fun onConnectionFailed(reason: String) {
         activity?.runOnUiThread { //Wait 5s and retry connect stream
-            if (rtmpCamera.reTry(5000, reason)) {
+            if (rtmpCamera.getStreamClient().reTry(5000, reason)) {
                 dartMessenger?.send(DartMessenger.EventType.RTMP_RETRY, reason)
             } else {
                 dartMessenger?.send(DartMessenger.EventType.RTMP_STOPPED, "Failed retry")
@@ -81,13 +85,13 @@ class CameraNativeView(
         }
     }
 
-    override fun onAuthErrorRtmp() {
+    override fun onAuthError() {
         activity?.runOnUiThread {
             dartMessenger?.send(DartMessenger.EventType.ERROR, "Auth error")
         }
     }
 
-    override fun onDisconnectRtmp() {
+    override fun onDisconnect() {
         activity?.runOnUiThread {
             dartMessenger?.send(DartMessenger.EventType.RTMP_STOPPED, "Disconnected")
         }
@@ -294,12 +298,13 @@ class CameraNativeView(
     }
 
     fun getStreamStatistics(result: MethodChannel.Result) {
+        val streamClient = rtmpCamera.getStreamClient()
         val ret = hashMapOf<String, Any>()
-        ret["cacheSize"] = rtmpCamera.cacheSize
-        ret["sentAudioFrames"] = rtmpCamera.sentAudioFrames
-        ret["sentVideoFrames"] = rtmpCamera.sentVideoFrames
-        ret["droppedAudioFrames"] = rtmpCamera.droppedAudioFrames
-        ret["droppedVideoFrames"] = rtmpCamera.droppedVideoFrames
+        ret["cacheSize"] = streamClient.getCacheSize()
+        ret["sentAudioFrames"] = streamClient.getSentAudioFrames()
+        ret["sentVideoFrames"] = streamClient.getSentVideoFrames()
+        ret["droppedAudioFrames"] = streamClient.getDroppedAudioFrames()
+        ret["droppedVideoFrames"] = streamClient.getDroppedVideoFrames()
         ret["isAudioMuted"] = rtmpCamera.isAudioMuted
         ret["bitrate"] = rtmpCamera.bitrate
         ret["width"] = rtmpCamera.streamWidth
