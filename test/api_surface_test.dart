@@ -11,7 +11,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
-const String _baselineRef = 'pub://rtmp_broadcaster/2.3.4';
+const String _baselineRef = 'pub://rtmp_broadcaster/3.0.0';
 
 void main() {
   test('public API has no breaking changes since $_baselineRef', () async {
