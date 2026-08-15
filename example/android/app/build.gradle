@@ -33,10 +33,6 @@ android {
             signingConfig signingConfigs.debug
         }
     }
-
-    packagingOptions {
-        exclude 'project.clj'
-    }
 }
 
 flutter {
