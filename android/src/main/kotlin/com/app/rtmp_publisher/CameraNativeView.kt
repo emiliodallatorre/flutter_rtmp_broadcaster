@@ -217,12 +217,24 @@ class CameraNativeView(
         }
     }
 
-    fun pauseVideoStreaming(result: Any) {
-        // TODO: Implement pause video streaming
+    fun pauseVideoStreaming(result: MethodChannel.Result) {
+        try {
+            rtmpCamera.disableVideo()
+            rtmpCamera.disableAudio()
+            result.success(null)
+        } catch (e: IllegalStateException) {
+            result.error("pauseVideoStreamingFailed", e.message, null)
+        }
     }
 
-    fun resumeVideoStreaming(result: Any) {
-        // TODO: Implement resume video streaming
+    fun resumeVideoStreaming(result: MethodChannel.Result) {
+        try {
+            rtmpCamera.enableVideo()
+            rtmpCamera.enableAudio()
+            result.success(null)
+        } catch (e: IllegalStateException) {
+            result.error("resumeVideoStreamingFailed", e.message, null)
+        }
     }
 
     fun stopVideoRecordingOrStreaming(result: MethodChannel.Result) {
