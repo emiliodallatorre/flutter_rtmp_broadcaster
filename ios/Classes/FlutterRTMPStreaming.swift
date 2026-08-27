@@ -71,12 +71,8 @@ public class FlutterRTMPStreaming : NSObject {
     @objc
     public func open(url: String, width: Int, height: Int, bitrate: Int) {
         rtmpStream = RTMPStream(connection: rtmpConnection)
-        rtmpStream.captureSettings = [
-            .sessionPreset: AVCaptureSession.Preset.hd1280x720,
-            .continuousAutofocus: true,
-            .continuousExposure: true,
-            .fps: 30
-        ]
+        rtmpStream.sessionPreset = AVCaptureSession.Preset.hd1280x720
+        rtmpStream.frameRate = 30
         rtmpConnection.addEventListener(.rtmpStatus, selector:#selector(rtmpStatusHandler), observer: self)
         rtmpConnection.addEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
         
@@ -87,25 +83,25 @@ public class FlutterRTMPStreaming : NSObject {
         self.url = bits.joined(separator: "/")
         
         // TODO: Da correggere
-        rtmpStream.videoSettings = [
-            .width: width,
-            .height: height,
-            .profileLevel: kVTProfileLevel_H264_Baseline_AutoLevel,
-            .maxKeyFrameIntervalDuration: 2,
-            .bitrate: bitrate
-        ]
+        var videoSettings: VideoCodecSettings = rtmpStream.videoSettings
+        videoSettings.videoSize = CGSize(width: width, height: height)
+        videoSettings.profileLevel = kVTProfileLevel_H264_Baseline_AutoLevel as String
+        videoSettings.maxKeyFrameIntervalDuration = 2
+        videoSettings.bitRate = bitrate
+        rtmpStream.videoSettings = videoSettings
         rtmpConnection.delegate = myDelegate
         self.retries = 0
         // Run this on the ui thread.
         DispatchQueue.main.async {
             if let interfaceOrientation: UIInterfaceOrientation = self.currentInterfaceOrientation(),
                let orientation = DeviceUtil.videoOrientation(by: interfaceOrientation) {
-                self.rtmpStream.orientation = orientation
+                self.rtmpStream.videoOrientation = orientation
                 print(String(format:"Orient %d", orientation.rawValue))
                 switch (orientation) {
                 case .landscapeLeft, .landscapeRight:
-                    self.rtmpStream.videoSettings[.width] = width;
-                    self.rtmpStream.videoSettings[.height] = height;
+                    var updatedVideoSettings: VideoCodecSettings = self.rtmpStream.videoSettings
+                    updatedVideoSettings.videoSize = CGSize(width: width, height: height)
+                    self.rtmpStream.videoSettings = updatedVideoSettings
                     break;
                 default:
                     break;
@@ -169,13 +165,14 @@ public class FlutterRTMPStreaming : NSObject {
     
     @objc
     public func getStreamStatistics() -> NSDictionary {
+        let videoSettings: VideoCodecSettings = rtmpStream.videoSettings
         let ret: NSDictionary = [
             "paused": isPaused(),
-            "bitrate": rtmpStream.videoSettings[.bitrate]!,
-            "width": rtmpStream.videoSettings[.width]!,
-            "height": rtmpStream.videoSettings[.height]!,
-            "fps": (rtmpStream.captureSettings[.fps]! as! NSNumber).floatValue,
-            "orientation": rtmpStream.orientation.rawValue
+            "bitrate": videoSettings.bitRate,
+            "width": Int(videoSettings.videoSize.width),
+            "height": Int(videoSettings.videoSize.height),
+            "fps": rtmpStream.frameRate,
+            "orientation": rtmpStream.videoOrientation.rawValue
         ]
         //ret["cacheSize"] = rtmpConnection.bandWidth
         //ret["sentAudioFrames"] = rtmpCamera!!.sentAudioFrames
@@ -194,23 +191,20 @@ public class FlutterRTMPStreaming : NSObject {
     public func addVideoData(buffer: CMSampleBuffer) {
         if let description = CMSampleBufferGetFormatDescription(buffer) {
             let dimensions = CMVideoFormatDescriptionGetDimensions(description)
-            rtmpStream.videoSettings = [
-                .width: dimensions.width,
-                .height: dimensions.height,
-                .profileLevel: kVTProfileLevel_H264_Baseline_AutoLevel,
-                .maxKeyFrameIntervalDuration: 2,
-                .bitrate: 1200 * 1024
-            ]
-            rtmpStream.captureSettings = [
-                .fps: 24
-            ]
+            var videoSettings: VideoCodecSettings = rtmpStream.videoSettings
+            videoSettings.videoSize = CGSize(width: Int(dimensions.width), height: Int(dimensions.height))
+            videoSettings.profileLevel = kVTProfileLevel_H264_Baseline_AutoLevel as String
+            videoSettings.maxKeyFrameIntervalDuration = 2
+            videoSettings.bitRate = 1200 * 1024
+            rtmpStream.videoSettings = videoSettings
+            rtmpStream.frameRate = 24
         }
-        rtmpStream.appendSampleBuffer( buffer, withType: .video)
+        rtmpStream.append(buffer)
     }
     
     @objc
     public func addAudioData(buffer: CMSampleBuffer) {
-        rtmpStream.appendSampleBuffer( buffer, withType: .audio)
+        rtmpStream.append(buffer)
     }
     
     @objc
@@ -226,25 +220,31 @@ class MyRTMPStreamQoSDelagate: RTMPConnectionDelegate {
     let incrementBitrate: Int = 512 * 1024
 
     func connection(_ connection: RTMPConnection, publishInsufficientBWOccured stream: RTMPStream) {
-        guard let videoBitrate = stream.videoSettings[.bitrate] as? Int else { return }
+        let currentSettings: VideoCodecSettings = stream.videoSettings
+        let videoBitrate: Int = currentSettings.bitRate
 
         var newVideoBitrate = videoBitrate / 2
         if newVideoBitrate < minBitrate {
             newVideoBitrate = minBitrate
         }
         print("publishInsufficientBWOccured update: \(videoBitrate) -> \(newVideoBitrate)")
-        stream.videoSettings[.bitrate] = newVideoBitrate
+        var updatedSettings: VideoCodecSettings = currentSettings
+        updatedSettings.bitRate = newVideoBitrate
+        stream.videoSettings = updatedSettings
     }
 
     func connection(_ connection: RTMPConnection, publishSufficientBWOccured stream: RTMPStream) {
-        guard let videoBitrate = stream.videoSettings[.bitrate] as? Int else { return }
+        let currentSettings: VideoCodecSettings = stream.videoSettings
+        let videoBitrate: Int = currentSettings.bitRate
 
         var newVideoBitrate = videoBitrate + incrementBitrate
         if newVideoBitrate > maxBitrate {
             newVideoBitrate = maxBitrate
         }
         print("publishSufficientBWOccured update: \(videoBitrate) -> \(newVideoBitrate)")
-        stream.videoSettings[.bitrate] = newVideoBitrate
+        var updatedSettings: VideoCodecSettings = currentSettings
+        updatedSettings.bitRate = newVideoBitrate
+        stream.videoSettings = updatedSettings
     }
 
     func connection(_ connection: RTMPConnection, updateStats stream: RTMPStream) {
