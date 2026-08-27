@@ -556,7 +556,7 @@ class CameraController extends ValueNotifier<CameraValue> {
         bitrate: data["bitrate"],
         isAudioMuted: data["isAudioMuted"],
         cacheSize: data["cacheSize"],
-        droppedAudioFrames: data["drpppedAudioFrames"],
+        droppedAudioFrames: data["droppedAudioFrames"],
         droppedVideoFrames: data["droppedVideoFrames"],
       );
     } on PlatformException catch (e) {

@@ -90,6 +90,12 @@ class MethodCallHandlerImplNew(
                 result.success(null)
             }
 
+            "prepareForVideoStreaming" -> {
+                Log.i("Stuff", "prepareForVideoStreaming")
+                // This optimization is not required for Android.
+                result.success(null)
+            }
+
             "startVideoRecording" -> {
                 Log.i("Stuff", "startVideoRecording")
                 getCameraView()?.startVideoRecording(call.argument("filePath")!!, result)
