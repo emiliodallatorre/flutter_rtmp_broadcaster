@@ -22,6 +22,51 @@ public class FlutterRTMPStreaming : NSObject {
     public init(sink: @escaping FlutterEventSink) {
         eventSink = sink
     }
+
+    private func currentInterfaceOrientation() -> UIInterfaceOrientation? {
+        if #available(iOS 13.0, *) {
+            let scenes: Set<UIScene> = UIApplication.shared.connectedScenes
+            let foregroundScene: UIWindowScene? = scenes
+                .compactMap { $0 as? UIWindowScene }
+                .first(where: { $0.activationState == .foregroundActive })
+            let anyWindowScene: UIWindowScene? = scenes
+                .compactMap { $0 as? UIWindowScene }
+                .first
+            return (foregroundScene ?? anyWindowScene)?.interfaceOrientation
+        }
+        return UIApplication.shared.statusBarOrientation
+    }
+
+    private func scheduleReconnect(errorDescription: String, terminalEvent: String) {
+        guard retries <= 3 else {
+            eventSink([
+                "event": terminalEvent,
+                "errorDescription": errorDescription
+            ])
+            return
+        }
+
+        retries += 1
+        let reconnectDelay: Double = pow(2.0, Double(retries))
+        guard let reconnectUrl: String = url else {
+            eventSink([
+                "event": "error",
+                "errorDescription": "rtmp reconnect URL is missing"
+            ])
+            return
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + reconnectDelay) { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.rtmpConnection.connect(reconnectUrl)
+            self.eventSink([
+                "event": "rtmp_retry",
+                "errorDescription": errorDescription
+            ])
+        }
+    }
     
     @objc
     public func open(url: String, width: Int, height: Int, bitrate: Int) {
@@ -29,7 +74,8 @@ public class FlutterRTMPStreaming : NSObject {
         rtmpStream.captureSettings = [
             .sessionPreset: AVCaptureSession.Preset.hd1280x720,
             .continuousAutofocus: true,
-            .continuousExposure: true
+            .continuousExposure: true,
+            .fps: 30
         ]
         rtmpConnection.addEventListener(.rtmpStatus, selector:#selector(rtmpStatusHandler), observer: self)
         rtmpConnection.addEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
@@ -48,14 +94,12 @@ public class FlutterRTMPStreaming : NSObject {
             .maxKeyFrameIntervalDuration: 2,
             .bitrate: bitrate
         ]
-        rtmpStream.captureSettings = [
-            .fps: 30
-        ]
         rtmpStream.delegate = myDelegate
         self.retries = 0
         // Run this on the ui thread.
         DispatchQueue.main.async {
-            if let orientation = DeviceUtil.videoOrientation(by:  UIApplication.shared.statusBarOrientation) {
+            if let interfaceOrientation: UIInterfaceOrientation = self.currentInterfaceOrientation(),
+               let orientation = DeviceUtil.videoOrientation(by: interfaceOrientation) {
                 self.rtmpStream.orientation = orientation
                 print(String(format:"Orient %d", orientation.rawValue))
                 switch (orientation) {
@@ -85,16 +129,10 @@ public class FlutterRTMPStreaming : NSObject {
             retries = 0
             break
         case RTMPConnection.Code.connectFailed.rawValue, RTMPConnection.Code.connectClosed.rawValue:
-            guard retries <= 3 else {
-                eventSink(["event" : "error",
-                           "errorDescription" : "connection failed " + e.type.rawValue])
-                return
-            }
-            retries += 1
-            Thread.sleep(forTimeInterval: pow(2.0, Double(retries)))
-            rtmpConnection.connect(url!)
-            eventSink(["event" : "rtmp_retry",
-                       "errorDescription" : "connection failed " + e.type.rawValue])
+            scheduleReconnect(
+                errorDescription: "connection failed " + e.type.rawValue,
+                terminalEvent: "error"
+            )
             break
         default:
             break
@@ -106,16 +144,10 @@ public class FlutterRTMPStreaming : NSObject {
         if #available(iOS 10.0, *) {
             os_log("%s", notification.name.rawValue)
         }
-        guard retries <= 3 else {
-            eventSink(["event" : "rtmp_stopped",
-                       "errorDescription" : "rtmp disconnected"])
-            return
-        }
-        retries+=1
-        Thread.sleep(forTimeInterval: pow(2.0, Double(retries)))
-        rtmpConnection.connect(url!)
-        eventSink(["event" : "rtmp_retry",
-                   "errorDescription" : "rtmp disconnected"])
+        scheduleReconnect(
+            errorDescription: "rtmp disconnected",
+            terminalEvent: "rtmp_stopped"
+        )
         
     }
     
