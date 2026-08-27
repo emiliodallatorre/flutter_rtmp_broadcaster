@@ -13,7 +13,7 @@ jobs:
     name: Analyze (dart analyze)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -28,8 +28,8 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with:
           distribution: 'temurin'
           java-version: ${{ env.JAVA_VERSION }}
@@ -40,15 +40,15 @@ jobs:
           cache: true
       - name: Cache Gradle
         if: startsWith(matrix.os, 'ubuntu')
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('example/android/**/*.gradle*', 'android/**/*.gradle*') }}
       - name: Cache CocoaPods
-        if: startsWith(matrix.os, 'macOS')
-        uses: actions/cache@v4
+        if: startsWith(matrix.os, 'macos')
+        uses: actions/cache@v6
         with:
           path: |
             ~/Library/Caches/CocoaPods
@@ -76,9 +76,10 @@ jobs:
     name: Report coverage
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: write
+      contents: read
+      id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
@@ -88,14 +89,13 @@ jobs:
       - run: flutter test --coverage
         continue-on-error: true
       - name: Upload coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: lcov.info
           path: coverage/lcov.info
-      - name: Report coverage on pull request
-        if: github.event_name == 'pull_request'
-        uses: zgosalvez/github-actions-report-lcov@v4
+      - name: Upload coverage to Codecov
+        if: hashFiles('coverage/lcov.info') != ''
+        uses: codecov/codecov-action@v7
         with:
-          coverage-files: coverage/lcov.info
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          update-comment: true
+          files: coverage/lcov.info
+          use_oidc: true

@@ -1,5 +1,7 @@
 # Flutter RTMP broadcaster
 
+[![codecov](https://codecov.io/gh/emiliodallatorre/flutter_rtmp_broadcaster/graph/badge.svg?branch=master)](https://codecov.io/gh/emiliodallatorre/flutter_rtmp_broadcaster)
+
 > [!IMPORTANT]
 > Development of version 3.0 is being restarted. Expect breaking changes to the API and Android/iOS build configuration while this work is in progress.
 
