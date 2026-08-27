@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wait for Dart CI checks on this tag
-        uses: lewagon/wait-on-check-action@v1
+        uses: lewagon/wait-on-check-action@v1.9.1
         with:
           ref: ${{ github.sha }}
           running-workflow-name: 'Dart CI'
