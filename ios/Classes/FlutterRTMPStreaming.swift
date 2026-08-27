@@ -23,6 +23,42 @@ public class FlutterRTMPStreaming : NSObject {
         eventSink = sink
     }
 
+    private func parseRtmpEndpoint(_ rawUrl: String) -> (connectUrl: String, streamName: String)? {
+        guard let components: URLComponents = URLComponents(string: rawUrl),
+              let scheme: String = components.scheme,
+              let host: String = components.host else {
+            return nil
+        }
+
+        let pathSegments: [String] = components.percentEncodedPath
+            .split(separator: "/")
+            .map(String.init)
+        guard let streamPathSegment: String = pathSegments.last, !streamPathSegment.isEmpty else {
+            return nil
+        }
+
+        let appPathSegments: ArraySlice<String> = pathSegments.dropLast()
+        let appPath: String = appPathSegments.isEmpty ? "/" : "/" + appPathSegments.joined(separator: "/")
+
+        var connectComponents: URLComponents = URLComponents()
+        connectComponents.scheme = scheme
+        connectComponents.host = host
+        connectComponents.port = components.port
+        connectComponents.user = components.user
+        connectComponents.password = components.password
+        connectComponents.percentEncodedPath = appPath
+
+        guard let connectUrl: String = connectComponents.string else {
+            return nil
+        }
+
+        var streamName: String = streamPathSegment
+        if let query: String = components.percentEncodedQuery, !query.isEmpty {
+            streamName += "?\(query)"
+        }
+        return (connectUrl, streamName)
+    }
+
     private func currentInterfaceOrientation() -> UIInterfaceOrientation? {
         if #available(iOS 13.0, *) {
             let scenes: Set<UIScene> = UIApplication.shared.connectedScenes
@@ -76,11 +112,15 @@ public class FlutterRTMPStreaming : NSObject {
         rtmpConnection.addEventListener(.rtmpStatus, selector:#selector(rtmpStatusHandler), observer: self)
         rtmpConnection.addEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
         
-        let uri = URL(string: url)
-        self.name = uri?.pathComponents.last
-        var bits = url.components(separatedBy: "/")
-        bits.removeLast()
-        self.url = bits.joined(separator: "/")
+        guard let endpoint: (connectUrl: String, streamName: String) = parseRtmpEndpoint(url) else {
+            eventSink([
+                "event": "error",
+                "errorDescription": "invalid RTMP URL"
+            ])
+            return
+        }
+        self.url = endpoint.connectUrl
+        self.name = endpoint.streamName
         
         // TODO: Da correggere
         var videoSettings: VideoCodecSettings = rtmpStream.videoSettings
@@ -121,7 +161,14 @@ public class FlutterRTMPStreaming : NSObject {
         
         switch code {
         case RTMPConnection.Code.connectSuccess.rawValue:
-            rtmpStream.publish(name)
+            guard let streamName: String = name else {
+                eventSink([
+                    "event": "error",
+                    "errorDescription": "rtmp stream name is missing"
+                ])
+                return
+            }
+            rtmpStream.publish(streamName)
             retries = 0
             break
         case RTMPConnection.Code.connectFailed.rawValue, RTMPConnection.Code.connectClosed.rawValue:
