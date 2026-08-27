@@ -14,7 +14,7 @@ jobs:
         uses: lewagon/wait-on-check-action@v1
         with:
           ref: ${{ github.sha }}
-          running-workflow-name: ${{ github.workflow }}
+          running-workflow-name: 'Dart CI'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 15
           allowed-conclusions: success
