@@ -1,3 +1,13 @@
+## 3.1.0
+
+* **Breaking:** iOS minimum deployment target is now `13.0` (previously `10.0`) to support modern HaishinKit 1.x.
+* Android: `features/update-android-library` is already contained in this branch history (no additional Android code changes introduced by the merge step).
+* iOS: upgraded `HaishinKit` to `~> 1.9.9` and updated Swift settings in the plugin podspec (`swift_version` `5.10`).
+* iOS: migrated RTMP bridge code to the HaishinKit 1.9.9 API surface (`VideoCodecSettings`, `append(_:)`, `videoOrientation`, `sessionPreset`, `frameRate`).
+* Fixed native handling for `prepareForVideoStreaming` so the Dart method is fully wired on iOS (and Android no-op parity).
+* Fixed `getStreamStatistics` mapping typo for `droppedAudioFrames`.
+* iOS: removed blocking reconnect sleeps, replaced with async backoff scheduling, and removed unsafe reconnect force-unwrapping.
+
 ## 3.0.1
 
 * Fixed `startVideoStreaming`/`startVideoRecordingAndStreaming` hanging indefinitely on Android when called immediately after `initialize()`, by waiting for the native preview surface to be ready before starting the stream (fixes [#15](https://github.com/emiliodallatorre/flutter_rtmp_broadcaster/issues/15))
@@ -94,4 +104,3 @@
 ## 0.3.4
 
 * Update android, ios build
-

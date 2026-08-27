@@ -1139,6 +1139,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         } else if ([@"prepareForVideoRecording" isEqualToString:call.method]) {
             [_camera setUpCaptureSessionForAudio];
             result(nil);
+        } else if ([@"prepareForVideoStreaming" isEqualToString:call.method]) {
+            [_camera setUpCaptureSessionForAudio];
+            result(nil);
         } else if ([@"startVideoRecording" isEqualToString:call.method]) {
             [_camera startVideoRecordingAtPath:call.arguments[@"filePath"] result:result];
         } else if ([@"startVideoStreaming" isEqualToString:call.method]) {

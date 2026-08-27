@@ -136,11 +136,12 @@ void main() {
     await controller.startVideoStreaming('rtmp://example.com');
     log.clear();
 
-    await controller.getStreamStatistics();
+    final StreamStatistics stats = await controller.getStreamStatistics();
 
     expect(log, <Matcher>[
       isMethodCall('getStreamStatistics', arguments: null),
     ]);
+    expect(stats.droppedAudioFrames, 0);
   });
 
   test('startVideoRecording sends textureId and filePath', () async {
