@@ -1,6 +1,9 @@
 # Flutter RTMP broadcaster
 
 [![codecov](https://codecov.io/gh/emiliodallatorre/flutter_rtmp_broadcaster/graph/badge.svg?branch=master)](https://codecov.io/gh/emiliodallatorre/flutter_rtmp_broadcaster)
+[![Dart CI](https://github.com/emiliodallatorre/flutter_rtmp_broadcaster/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/emiliodallatorre/flutter_rtmp_broadcaster/actions/workflows/test.yml)
+[![Publish](https://github.com/emiliodallatorre/flutter_rtmp_broadcaster/actions/workflows/publish.yml/badge.svg)](https://github.com/emiliodallatorre/flutter_rtmp_broadcaster/actions/workflows/publish.yml)
+[![Stale](https://github.com/emiliodallatorre/flutter_rtmp_broadcaster/actions/workflows/stale.yml/badge.svg)](https://github.com/emiliodallatorre/flutter_rtmp_broadcaster/actions/workflows/stale.yml)
 
 > [!IMPORTANT]
 > Development of version 3.0 is being restarted. Expect breaking changes to the API and Android/iOS build configuration while this work is in progress.
