@@ -1,6 +1,7 @@
 ## 3.1.0
 
 * **Breaking:** iOS minimum deployment target is now `13.0` (previously `10.0`) to support modern HaishinKit 1.x.
+* Android: `features/update-android-library` is already contained in this branch history (no additional Android code changes introduced by the merge step).
 * iOS: upgraded `HaishinKit` to `~> 1.9.9` and updated Swift settings in the plugin podspec (`swift_version` `5.10`).
 * iOS: migrated RTMP bridge code to the HaishinKit 1.9.9 API surface (`VideoCodecSettings`, `append(_:)`, `videoOrientation`, `sessionPreset`, `frameRate`).
 * Fixed native handling for `prepareForVideoStreaming` so the Dart method is fully wired on iOS (and Android no-op parity).
