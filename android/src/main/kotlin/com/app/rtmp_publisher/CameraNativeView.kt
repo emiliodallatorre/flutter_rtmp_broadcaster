@@ -217,12 +217,30 @@ class CameraNativeView(
         }
     }
 
-    fun pauseVideoStreaming(result: Any) {
-        // TODO: Implement pause video streaming
+    fun pauseVideoStreaming(result: MethodChannel.Result) {
+        try {
+            // RootEncoder has no enableVideo()/disableVideo() API (only audio has mute/unmute).
+            // To pause video without dropping the RTMP connection, stop the camera so it stops
+            // feeding frames into the encoder; the stream stays connected but sends no new
+            // video data until the camera is reopened in resumeVideoStreaming.
+            rtmpCamera.stopCamera()
+            rtmpCamera.disableAudio()
+            result.success(null)
+        } catch (e: IllegalStateException) {
+            result.error("pauseVideoStreamingFailed", e.message, null)
+        }
     }
 
-    fun resumeVideoStreaming(result: Any) {
-        // TODO: Implement resume video streaming
+    fun resumeVideoStreaming(result: MethodChannel.Result) {
+        try {
+            // Reopen the camera at the previously configured preview size so frames flow into
+            // the encoder/stream again.
+            startPreview(cameraName)
+            rtmpCamera.enableAudio()
+            result.success(null)
+        } catch (e: IllegalStateException) {
+            result.error("resumeVideoStreamingFailed", e.message, null)
+        }
     }
 
     fun stopVideoRecordingOrStreaming(result: MethodChannel.Result) {
