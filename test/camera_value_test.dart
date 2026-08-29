@@ -149,4 +149,30 @@ void main() {
       expect(afterUnrelatedUpdate.event, isNull);
     });
   });
+
+  group('CameraValue.toString', () {
+    test('contains every field it reports', () {
+      final CameraValue value = const CameraValue.uninitialized().copyWith(
+        isInitialized: true,
+        isRecordingVideo: true,
+        isStreamingVideoRtmp: true,
+        errorDescription: 'boom',
+        previewSize: const Size(1920, 1080),
+        previewQuarterTurns: 1,
+        isStreamingImages: true,
+      );
+
+      expect(
+        value.toString(),
+        'CameraValue('
+        'isRecordingVideo: true, '
+        'isStreamingVideoRtmp: true, '
+        'isInitialized: true, '
+        'errorDescription: boom, '
+        'previewSize: Size(1920.0, 1080.0), '
+        'previewQuarterTurns: 1, '
+        'isStreamingImages: true)',
+      );
+    });
+  });
 }
