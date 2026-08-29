@@ -1,3 +1,7 @@
+## 3.1.1
+
+* iOS: fixed RTMP stream key/query string being truncated when constructing the connect URL, by parsing the URL with `URLComponents` instead of splitting on `/` (fixes [#38](https://github.com/emiliodallatorre/flutter_rtmp_broadcaster/issues/38)).
+
 ## 3.1.0
 
 * **Breaking:** iOS minimum deployment target is now `13.0` (previously `10.0`) to support modern HaishinKit 1.x.
