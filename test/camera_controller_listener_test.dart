@@ -198,6 +198,25 @@ void main() {
     });
   });
 
+  group('camera_ready event', () {
+    test('records the event without changing known flags', () async {
+      final CameraController controller = await _createControllerReceivingEvents(
+        <Map<String, dynamic>>[
+          <String, dynamic>{
+            'eventType': 'camera_ready',
+            'errorDescription': null,
+          },
+        ],
+      );
+
+      expect(controller.value.event, <String, dynamic>{
+        'eventType': 'camera_ready',
+        'errorDescription': null,
+      });
+      expect(controller.value.hasError, isFalse);
+    });
+  });
+
   group('multiple events', () {
     test('are applied in order', () async {
       final CameraController controller = await _createControllerReceivingEvents(
