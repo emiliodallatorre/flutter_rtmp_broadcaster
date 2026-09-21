@@ -29,19 +29,22 @@ class CameraTogglesRow extends StatelessWidget {
       return const Text('No camera found');
     }
 
-    return Row(
-      children: <Widget>[
-        for (final CameraDescription cameraDescription in cameras)
-          SizedBox(
-            width: 90.0,
-            child: RadioListTile<CameraDescription>(
-              title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
-              groupValue: selectedCamera,
-              value: cameraDescription,
-              onChanged: isRecordingVideo ? null : onChanged,
+    return RadioGroup<CameraDescription?>(
+      onChanged: (CameraDescription? camera) =>
+          isRecordingVideo ? null : onChanged(camera),
+      groupValue: selectedCamera,
+      child: Row(
+        children: <Widget>[
+          for (final CameraDescription cameraDescription in cameras)
+            SizedBox(
+              width: 90.0,
+              child: RadioListTile<CameraDescription>(
+                title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
+                value: cameraDescription,
+              ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }
