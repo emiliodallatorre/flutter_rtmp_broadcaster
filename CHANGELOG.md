@@ -1,3 +1,8 @@
+## 3.2.0
+
+* **Breaking:** updates the minimum supported SDK version to Flutter 3.47/Dart 3.13.
+* Gradle: migrates the plugin and example app to AGP's built-in Kotlin support (`android.builtInKotlin=true`), removing the explicit `kotlin-android` plugin application and `kotlin-stdlib-jdk7` dependency.
+
 ## 3.1.1
 
 * iOS: fixed RTMP stream key/query string being truncated when constructing the connect URL, by parsing the URL with `URLComponents` instead of splitting on `/` (fixes [#38](https://github.com/emiliodallatorre/flutter_rtmp_broadcaster/issues/38)).
